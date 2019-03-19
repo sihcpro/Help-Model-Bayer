@@ -28,17 +28,20 @@ set_words = []
 for row in doc_train:
     word = row.split(' ')
     set_words += word
-set(set_words)
+set_words = list(set(set_words))
 print(len(set_words))
 
 # WordToVec
 vectors = []
 
-for row in doc_train:
+for j, row_in_doc in enumerate(doc_train):
     vector = np.zeros(len(set_words))
     for i, word in enumerate(set_words):
-        if word in doc_train:
+        if word in row_in_doc:
             vector[i] = 1
+    if j % 200 == 0:
+        print(str(j * 100 // len(doc_train)) + "%")
+    # print(vector)
     vectors.append(vector)
 print(np.shape(vectors))
 print('Done building vectors')
